@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import './AdminPage.css';
 import images from "../../assets/images";
 import { useDispatch, useSelector } from "react-redux";
-import { setData, fetchBooks} from "../../../Redux/Books";
+import { setData, fetchBooks } from "../../../Redux/Books";
 import Booklist from "../Booklist/Booklist";
+import NewBookModal from "../NewBookModal/NewBookModal";
 
 
 
@@ -14,7 +15,7 @@ const AdminPage = () => {
     const navigate = useNavigate();
 
 
-    const logout = () =>{
+    const logout = () => {
         navigate("/login")
     }
 
@@ -56,10 +57,14 @@ const AdminPage = () => {
 
             <div className="container-fluid row p-2 w-100  text-dark h3">
                 <div className="col text-center"> Hello, {user.user.firstname} {user.user.lastname}</div>
-                
+
             </div>
 
-            <Booklist/>
+            
+                
+                <Booklist />
+            
+
 
         </div>
     )

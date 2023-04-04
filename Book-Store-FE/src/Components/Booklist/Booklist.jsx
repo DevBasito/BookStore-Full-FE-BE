@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import './Booklist.css';
 import { useDispatch, useSelector } from "react-redux";
 import { setData, fetchBooks } from "../../../Redux/Books";
+import NewBookModal from "../NewBookModal/NewBookModal";
+
 
 
 const Booklist = () => {
@@ -23,7 +25,16 @@ const Booklist = () => {
 
 
     return (
-        <div id="books" className="p-5">
+        <div id="books" className="">
+            <div className="container d-flex flex-direction-row justify-content-between w-100 mb-2 px-3">
+                <div className="h3">List of Books</div>
+                <div>
+                    <button className="btn btn-success" data-bs-toggle="modal" data-bs-target="#NewBookModal">
+                        New Book<i className="fa fa-plus"></i>
+                    </button>
+                </div>
+
+            </div>
 
             <div className="container  mx-auto table-responsive">
                 <table className="table table-bordered table-striped table-hover table-responsive ">

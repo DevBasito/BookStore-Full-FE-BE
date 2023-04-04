@@ -8,7 +8,7 @@ const Footer = () => {
     return (
         <div id="footer" className="p-5">
                 <div className="row">
-                    <div>hdjbjfnjfdivdfdnsafvhsjfhvjdfnvfhfsjffhuh9uudjhfhdshvimdwgit </div>
+                    
 
                     <div className="col">
                         Copyright © 2023 Book Store | Powered By <a href="https://www.devbasito.netlify.app" target="_blank" className="text-decoration-none">DevBasito</a>

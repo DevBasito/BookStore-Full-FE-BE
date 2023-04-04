@@ -53,6 +53,7 @@ const Nav = () => {
 
             </ul>
           </div>
+          
           {
             <div className="container-fluid text-white col-12 col-sm-4 text-white justify-content-end px-5">
               <ul className="navbar-nav">
@@ -67,7 +68,9 @@ const Nav = () => {
                 }
               </ul>
             </div>
+
           }
+           
         </nav>
 
 

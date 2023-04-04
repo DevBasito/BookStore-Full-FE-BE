@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import './Login.css';
 import images from "../../assets/images";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,15 +12,15 @@ const Login = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    
-    const dispatch = useDispatch();
-    
 
-    const handleSubmit = async(e) => {
+    const dispatch = useDispatch();
+
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const user = {email, password}
-        const response = await fetch ('http://localhost:5000/signin', {
+        const user = { email, password }
+        const response = await fetch('http://localhost:5000/signin', {
             method: 'POST',
             body: JSON.stringify(user),
             headers: {
@@ -30,12 +30,12 @@ const Login = () => {
 
         const data = await response.json();
 
-        if (!response.ok){
+        if (!response.ok) {
             setError(data.message)
             console.log(data.message)
-            
+
         }
-        else if (response.ok){
+        else if (response.ok) {
             setError(null);
             setEmail('');
             setPassword('');
@@ -43,7 +43,7 @@ const Login = () => {
             dispatch(setData(data));
             navigate('/admin')
             // alert(data.message)
-            
+
 
 
         }
@@ -63,6 +63,11 @@ const Login = () => {
                 </div>
 
                 <form onSubmit={handleSubmit}>
+                    {error &&
+                        <div className="bg-danger text-white mt-3 p-3">
+                            {error}
+                        </div>
+                    }
                     <div className="mb-3 mt-3">
                         <label for="email">Email:</label>
                         <input type="email" className="form-control" id="email" placeholder="Enter email" name="email" onChange={(e) =>
@@ -81,10 +86,7 @@ const Login = () => {
                         </label>
                     </div>
                     <button type="submit" className="btn btn-primary btn-lg">Submit</button>
-                    {error && 
-                            <div className="bg-danger text-white mt-3 p-3">
-                                {error}
-                            </div> }
+
                 </form>
             </div>
 
