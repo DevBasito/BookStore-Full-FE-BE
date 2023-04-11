@@ -34,11 +34,16 @@ const Books = () => {
                     {books && books.map((book) => (
 
                         <div className="card col-lg-3 mx-lg-5 my-3 p-3" key={book._id}>
-                            <img className="card-img-top img-fluid" src={book.imageUrl} style={{ width: "100%" }} />
+                            <div >
+                                <img className="card-img-top img-fluid" src={book.imageUrl} style={{ width: "100%", height: "25rem" }} />
+                            </div>
                             <div className="card-body">
                                 <h4 className="card-title">{book.title}</h4>
-                                <p className="card-text">{book.category}</p>
-                                <a href="#" className="btn btn-primary">{book.description}</a>
+                                <h6 className="card-text">{book.category}</h6>
+                                <p className="text-left" style={{ height:"13rem" }}>{book.description}</p>
+                                <div className="text-center">
+                                    <a href="#" className="btn btn-primary btn-lg px-5">$20</a>
+                                </div>
                             </div>
 
                         </div>

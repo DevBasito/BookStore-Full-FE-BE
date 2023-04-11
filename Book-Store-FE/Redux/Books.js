@@ -4,7 +4,8 @@ import axios from "axios";
 export const BookSlice = createSlice({
     name: 'books',
     initialState: {
-        books: ""
+        books: "",
+        bookById: ""
     },
     reducers: {
         setData: (state, action) => {

@@ -15,6 +15,10 @@ const NewBookModal = () => {
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState(null);
 
+  const close = () => {
+    navigate('/admin')
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newbook = { title, category, author, imageUrl, description };
@@ -103,7 +107,7 @@ const NewBookModal = () => {
 
 
             <div className="modal-footer">
-              <button className="btn btn-danger" data-bs-dismiss="modal" onClick={() => { navigate("/admin") }}>Close</button>
+              <button className="btn btn-danger" data-bs-dismiss="modal" onClick={close}>Close</button>
             </div>
 
           </div>
