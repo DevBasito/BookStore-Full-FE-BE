@@ -3,7 +3,7 @@ import './Books.css';
 import Header from "../Header/Header";
 import Subscribe from "../Subscribe/Subscribe";
 import { useDispatch, useSelector } from "react-redux";
-import { setData, fetchBooks, bookMinus, bookPlus } from "../../../Redux/Books";
+import { setData} from "../../../Redux/Books";
 
 
 const Books = () => {

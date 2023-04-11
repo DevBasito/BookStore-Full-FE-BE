@@ -41,6 +41,7 @@ const Booklist = () => {
                 <table className="table table-bordered table-striped table-hover table-responsive ">
                     <thead className="table-dark text-white">
                         <tr className="" >
+                            <th> </th>
                             <th>Title</th>
                             <th>Description</th>
                             <th>Category</th>
@@ -54,6 +55,7 @@ const Booklist = () => {
                         {books && books.map((book) => (
 
                             <tr className="" key={book._id}>
+                                <td><i className="fa fa-edit"></i></td>
                                 <td>{book.title}</td>
                                 <td>{book.description}</td>
                                 <td>{book.category}</td>
