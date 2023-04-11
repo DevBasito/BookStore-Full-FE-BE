@@ -25,12 +25,13 @@ const Booklist = () => {
 
 
     return (
+        <>
         <div id="books" className="">
             <div className="container d-flex flex-direction-row justify-content-between w-100 mb-2 px-3">
                 <div className="h3">List of Books</div>
                 <div>
-                    <button className="btn btn-success" data-bs-toggle="modal" data-bs-target="#NewBookModal">
-                        New Book<i className="fa fa-plus"></i>
+                    <button className="btn btn-success" data-bs-toggle="modal" data-bs-target="#myNewBookModal">
+                        New Book <i className="fa fa-plus"></i>
                     </button>
                 </div>
 
@@ -66,6 +67,11 @@ const Booklist = () => {
                 </table>
             </div>
         </div>
+
+
+        <NewBookModal/>
+
+        </>
     )
 
 }
