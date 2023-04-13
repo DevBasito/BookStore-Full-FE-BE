@@ -5,7 +5,7 @@ import images from "../../assets/images";
 import { useDispatch, useSelector } from "react-redux";
 import { setData, fetchBooks } from "../../../Redux/Books";
 import Booklist from "../Booklist/Booklist";
-import NewBookModal from "../NewBookModal/NewBookModal";
+import NewBookModal from "../Modal/NewBookModal";
 
 
 

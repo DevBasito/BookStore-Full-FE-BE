@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import './Booklist.css';
 import { useDispatch, useSelector } from "react-redux";
 import { setData, fetchBooks } from "../../../Redux/Books";
-import NewBookModal from "../NewBookModal/NewBookModal";
+import NewBookModal from "../Modal/NewBookModal";
+import UpdateBookModal from "../Modal/UpdateBookModal";
+
 
 
 
@@ -10,6 +12,10 @@ const Booklist = () => {
     const { user } = useSelector(state => state.user);
     const { books } = useSelector(state => state.books);
     const dispatch = useDispatch();
+    const [bookId, setBookId] = useState(null)
+
+
+    
 
     useEffect(() => {
 
@@ -66,7 +72,12 @@ const Booklist = () => {
                         {books && books.map((book) => (
 
                             <tr className="" key={book._id}>
-                                <td><i className="fa fa-edit"></i></td>
+                                <td>
+                                
+                                    <i className="fa fa-edit btn" data-bs-toggle="modal" data-bs-target="#updateBookModal" onClick={()=>{setBookId(book._id)}}></i>
+                                  
+
+                                </td>
                                 <td>{book.title}</td>
                                 <td>{book.description}</td>
                                 <td>{book.category}</td>
@@ -86,6 +97,7 @@ const Booklist = () => {
 
 
         <NewBookModal/>
+        <UpdateBookModal id = {bookId}  />
 
         </>
     )
