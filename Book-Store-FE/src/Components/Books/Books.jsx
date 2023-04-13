@@ -21,7 +21,7 @@ const Books = () => {
 
         }
         fetchedbooks()
-    }, [])
+    }, [books])
 
 
     return (
@@ -42,7 +42,7 @@ const Books = () => {
                                 <h6 className="card-text">{book.category}</h6>
                                 <p className="text-left" style={{ height:"13rem" }}>{book.description}</p>
                                 <div className="text-center">
-                                    <a href="#" className="btn btn-primary btn-lg px-5">$20</a>
+                                    <a href="#" className="btn btn-primary btn-lg px-5">$ <span>{book.price}</span></a>
                                 </div>
                             </div>
 

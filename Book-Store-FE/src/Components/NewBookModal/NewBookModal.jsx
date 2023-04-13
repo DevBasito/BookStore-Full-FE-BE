@@ -13,15 +13,36 @@ const NewBookModal = () => {
   const [author, setAuthor] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
   const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
+
+  const clearState = () => {
+    setTitle("");
+    setCategory('');
+    setAuthor('');
+    setImageUrl('');
+    setDescription('');
+    setPrice('');
+  }
 
   const close = () => {
+    setMessage(null);
+    setError(null);
+    clearState();
     navigate('/admin')
+  }
+
+ 
+
+  const cancelSuccessMsg = () => {
+    setMessage(null);
+    setError(null);
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newbook = { title, category, author, imageUrl, description };
+    const newbook = { title, category, author, imageUrl, description, price };
     const response = await fetch('http://localhost:5000/books/create', {
       method: 'POST',
       body: JSON.stringify(newbook),
@@ -35,24 +56,12 @@ const NewBookModal = () => {
 
     if (!response.ok) {
 
-      console.log(data.message)
-      setMessage(data.message)
+      setError(data.message)
 
     }
     else if (response.ok) {
       setMessage(data.message)
-      setTitle("");
-      setCategory('');
-      setAuthor('');
-      setImageUrl('');
-      setDescription('');
-      // console.log('user signed in', data);
-      // dispatch(setData(data));
-      // navigate('/admin')
-
-
-
-
+      clearState();
     }
 
 
@@ -64,12 +73,21 @@ const NewBookModal = () => {
       <div className="modal fade" id="myNewBookModal">
         <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content">
+            <div className="text-center  p-3 h4">NEW BOOK</div>
 
 
             <div className="modal-body ">
               {message &&
-                <div className="w-50 float-right bg-danger">
+                <div className="w-50 text-white p-3 float-end bg-success mb-3">
+                  <i className="fa fa-close btn text-white" onClick={cancelSuccessMsg}></i>
                   {message}
+                </div>
+              }
+
+              {error &&
+                <div className="w-50 text-white p-3 float-end bg-danger mb-3">
+                  <i className="fa fa-close btn text-white" onClick={cancelSuccessMsg}></i>
+                  {error}
                 </div>
               }
 
@@ -96,6 +114,10 @@ const NewBookModal = () => {
                 <div className="my-3 ">
                   <input type="text" className="form-control" id="description" placeholder="Book Description" name="description" onChange={(e) =>
                     setDescription(e.target.value)} value={description} required />
+                </div>
+                <div className="my-3 ">
+                  <input type="number" className="form-control" id="price" placeholder="Price in Dollars ($)" name="price" onChange={(e) =>
+                    setPrice(e.target.value)} value={price} required />
                 </div>
 
                 <button type="submit" className="btn btn-primary btn-lg">Submit</button>

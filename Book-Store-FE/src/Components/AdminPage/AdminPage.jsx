@@ -42,7 +42,7 @@ const AdminPage = () => {
             }
             else if (response.ok) {
                 console.log(data.message)
-                console.log(data);
+                
 
 
             }

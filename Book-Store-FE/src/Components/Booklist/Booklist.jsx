@@ -7,27 +7,35 @@ import NewBookModal from "../NewBookModal/NewBookModal";
 
 
 const Booklist = () => {
+    const { user } = useSelector(state => state.user);
     const { books } = useSelector(state => state.books);
     const dispatch = useDispatch();
 
     useEffect(() => {
 
         const fetchedbooks = async () => {
-            const response = await fetch('http://localhost:5000/books/all');
+            const response = await fetch('http://localhost:5000/books/allbooks', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': user.token
+                },
+                credentials: 'same-origin',
+
+            });
             const data = await response.json();
-            console.log(data);
             dispatch(setData(data));
 
 
         }
         fetchedbooks()
-    }, [])
+    }, [books])
 
 
     return (
         <>
         <div id="books" className="">
-            <div className="container d-flex flex-direction-row justify-content-between w-100 mb-2 px-3">
+            <div className="container-fluid d-flex flex-direction-row justify-content-between w-100 mb-2 px-5">
                 <div className="h3">List of Books</div>
                 <div>
                     <button className="btn btn-success" data-bs-toggle="modal" data-bs-target="#myNewBookModal">
@@ -37,7 +45,7 @@ const Booklist = () => {
 
             </div>
 
-            <div className="container  mx-auto table-responsive">
+            <div className="container-fluid mx-auto table-responsive" id="tablediv">
                 <table className="table table-bordered table-striped table-hover table-responsive ">
                     <thead className="table-dark text-white">
                         <tr className="" >
@@ -47,6 +55,9 @@ const Booklist = () => {
                             <th>Category</th>
                             <th>Author</th>
                             <th>Image Thumbnail</th>
+                            <th>Price ($)</th>
+                            <th>Sales Count</th>
+                            <th>Available</th>
 
                         </tr>
                     </thead>
@@ -61,6 +72,9 @@ const Booklist = () => {
                                 <td>{book.category}</td>
                                 <td>{book.author}</td>
                                 <td>{book.imageUrl}</td>
+                                <td>{book.price}</td>
+                                <td>{book.purchaseCount}</td>
+                                <td>{book.available_yn}</td>
 
                             </tr>
 
