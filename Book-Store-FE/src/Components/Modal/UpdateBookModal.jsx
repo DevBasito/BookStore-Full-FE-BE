@@ -1,16 +1,19 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setBookById } from "../../../Redux/Books";
 import { useNavigate } from "react-router-dom";
 
 
-const UpdateBookModal = ({id}) => {
+const UpdateBookModal = ({ bookid }) => {
 
   const { user } = useSelector(state => state.user);
+  const { bookById } = useSelector(state => state.books);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [id, setId] = useState(id);
-  const [title, setTitle] = useState(id);
-  const [category, setCategory] = useState("");
+  const [id, setId] = useState(bookid);
+  const [title, setTitle] = useState();
+  const [category, setCategory] = useState();
   const [author, setAuthor] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [description, setDescription] = useState("");
@@ -19,23 +22,27 @@ const UpdateBookModal = ({id}) => {
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
 
-  const clearState = () => {
-    setTitle("");
-    setCategory('');
-    setAuthor('');
-    setImageUrl('');
-    setDescription('');
-    setPrice('');
-    setAvailable_yn('');
-  }
 
-  const close = () => {
-    setMessage(null);
-    setError(null);
-    clearState();
-    navigate('/admin')
-  }
+  useEffect(() => {
 
+    const fetchbook = async () => {
+      const response = await fetch(`http://localhost:5000/books/${bookid}`, {
+        method: 'GET',
+        credentials: 'same-origin',
+
+      });
+      const data = await response.json();
+      dispatch(setBookById(data));
+      setTitle(bookById[0].title);
+      setCategory(bookById[0].category);
+      setAuthor(bookById[0].author);
+      setImageUrl(bookById[0].imageUrl)
+      setDescription(bookById[0].description)
+      setPrice(bookById[0].price)
+      setAvailable_yn(bookById[0].available_yn)
+    }
+    fetchbook();
+  }, [bookById])
 
 
   const cancelSuccessMsg = () => {
@@ -45,7 +52,7 @@ const UpdateBookModal = ({id}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const updateBook = { title, category, author, imageUrl, description, price, available_yn };
+    const updateBook = {id, title, category, author, imageUrl, description, price, available_yn };
     const response = await fetch('http://localhost:5000/books/update', {
       method: 'PUT',
       body: JSON.stringify(updateBook),
@@ -69,7 +76,7 @@ const UpdateBookModal = ({id}) => {
 
 
   }
-  console.log (available_yn)
+ 
 
 
   return (
@@ -101,7 +108,7 @@ const UpdateBookModal = ({id}) => {
 
                 <div className="my-3  ">
                   <input type="text" className="form-control" id="title" placeholder="Book Title" name="title" onChange={(e) =>
-                    setTitle(e.target.value)} value={id} required />
+                    setTitle(e.target.value)} value={title} required />
                 </div>
                 <div className="my-3 ">
                   <input type="text" className="form-control" id="category" placeholder="Book Genre" name="category" onChange={(e) =>
@@ -124,9 +131,9 @@ const UpdateBookModal = ({id}) => {
                     setPrice(e.target.value)} value={price} required />
                 </div>
                 <div className="form-check form-switch">
-                <label className="form-check-label" for="available_yn">Available</label>
-                  <input className="form-check-input form-control" type="checkbox" id="available_yn" name="available_yn"  onChange={(e) =>
-                    setAvailable_yn(e.target.checked)} value={available_yn} />                  
+                  <label className="form-check-label" for="available_yn">Available</label>
+                  <input className="form-check-input form-control" type="checkbox" id="available_yn" name="available_yn" onChange={(e) =>
+                    setAvailable_yn(e.target.checked)} value={available_yn} />
                 </div>
 
                 <button type="submit" className="btn btn-primary btn-lg">Update</button>
@@ -138,7 +145,7 @@ const UpdateBookModal = ({id}) => {
 
 
             <div className="modal-footer">
-              <button className="btn btn-danger" data-bs-dismiss="modal" onClick={close}>Close</button>
+              <button className="btn btn-danger" data-bs-dismiss="modal" >Close</button>
             </div>
 
           </div>

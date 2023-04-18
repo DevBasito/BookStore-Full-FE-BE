@@ -31,12 +31,13 @@ const Booklist = () => {
             });
             const data = await response.json();
             dispatch(setData(data));
+         
 
 
         }
         fetchedbooks()
     }, [books])
-
+    console.log(books)
 
     return (
         <>
@@ -84,7 +85,6 @@ const Booklist = () => {
                                 <td>{book.author}</td>
                                 <td>{book.imageUrl}</td>
                                 <td>{book.price}</td>
-                                <td>{book.purchaseCount}</td>
                                 <td>{book.available_yn}</td>
 
                             </tr>
@@ -97,7 +97,7 @@ const Booklist = () => {
 
 
         <NewBookModal/>
-        <UpdateBookModal id = {bookId}  />
+        <UpdateBookModal bookid= {bookId}  />
 
         </>
     )
