@@ -40,6 +40,8 @@ const UpdateBookModal = ({ bookid }) => {
       setDescription(bookById[0].description)
       setPrice(bookById[0].price)
       setAvailable_yn(bookById[0].available_yn)
+     
+     
     }
     fetchbook();
   }, [bookById])
@@ -81,7 +83,7 @@ const UpdateBookModal = ({ bookid }) => {
 
   return (
     <>
-      <div className="modal fade" id="updateBookModal">
+      <div className="modal fade" id="updateBookModal" >
         <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content">
             <div className="text-center  p-3 h4">EDIT BOOK</div>
@@ -133,7 +135,7 @@ const UpdateBookModal = ({ bookid }) => {
                 <div className="form-check form-switch">
                   <label className="form-check-label" for="available_yn">Available</label>
                   <input className="form-check-input form-control" type="checkbox" id="available_yn" name="available_yn" onChange={(e) =>
-                    setAvailable_yn(e.target.checked)} value={available_yn} />
+                    setAvailable_yn(e.target.checked)} value={available_yn} checked/>
                 </div>
 
                 <button type="submit" className="btn btn-primary btn-lg">Update</button>
