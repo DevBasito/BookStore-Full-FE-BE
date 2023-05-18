@@ -118,7 +118,7 @@ const UpdateBookModal = (  ) => {
                 </div>
                 <div className="my-3  ">
                   <input type="text" className="form-control" id="title" placeholder="Book Title" name="title" defaultValue={bookById.title} onChange={(e) =>
-                    setTitle(e.target.value)} readOnly={true}  required />
+                    setTitle(e.target.value)}  required />
                 </div>
                 <div className="my-3 ">
                   <input type="text" className="form-control" id="category" placeholder="Book Genre" name="category" defaultValue={bookById.category} onChange={(e) =>

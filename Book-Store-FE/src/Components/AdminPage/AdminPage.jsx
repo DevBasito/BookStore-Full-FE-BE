@@ -38,7 +38,10 @@ const AdminPage = () => {
 
             if (!response.ok) {
 
-                console.log(data.message)
+                alert(data.message + ". Session has ended, Kindly Log in Again");
+                window.sessionStorage.clear();
+                location.reload();
+
 
             }
             else if (response.ok) {
