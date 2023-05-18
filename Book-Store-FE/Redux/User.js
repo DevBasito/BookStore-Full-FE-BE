@@ -1,14 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+const data = window.sessionStorage.getItem('User');
 
 export const UserSlice = createSlice({
     name: 'user',
     initialState: {
-        user: ""
+        user: JSON.parse(data)
     },
     reducers: {
         setData: (state, action) => {
             state.user = action.payload;
+            window.sessionStorage.setItem('User', JSON.stringify(action.payload));
             
           }        
     },

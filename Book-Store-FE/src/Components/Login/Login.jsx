@@ -12,7 +12,7 @@ const Login = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-
+  
     const dispatch = useDispatch();
 
 
@@ -47,6 +47,7 @@ const Login = () => {
 
 
         }
+        
 
     }
 
@@ -69,15 +70,15 @@ const Login = () => {
                         </div>
                     }
                     <div className="mb-3 mt-3">
-                        <label for="email">Email:</label>
+                        <label htmlFor="email">Email:</label>
                         <input type="email" className="form-control" id="email" placeholder="Enter email" name="email" onChange={(e) =>
-                            setEmail(e.target.value)} value={email}
+                            setEmail(e.target.value)} 
                         />
                     </div>
                     <div className="mb-3">
-                        <label for="pwd">Password:</label>
+                        <label htmlFor="pwd">Password:</label>
                         <input type="password" className="form-control" placeholder="Enter password" name="pswd" onChange={(e) =>
-                            setPassword(e.target.value)} value={password}
+                            setPassword(e.target.value)} 
                         />
                     </div>
                     <div className="form-check mb-3">

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setData, fetchBooks } from "../../../Redux/Books";
 import Booklist from "../Booklist/Booklist";
 import NewBookModal from "../Modal/NewBookModal";
+import UpdateBookModal from "../Modal/UpdateBookModal";
 
 
 
@@ -63,6 +64,7 @@ const AdminPage = () => {
 
 
             <Booklist />
+            <UpdateBookModal />
 
 
 

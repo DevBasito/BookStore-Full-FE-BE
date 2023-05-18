@@ -1,51 +1,55 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setBookById } from "../../../Redux/Books";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 
 
-const UpdateBookModal = ({ bookid }) => {
+const UpdateBookModal = (  ) => {
 
   const { user } = useSelector(state => state.user);
   const { bookById } = useSelector(state => state.books);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
-  const [id, setId] = useState(bookid);
-  const [title, setTitle] = useState();
-  const [category, setCategory] = useState();
+   
+  const [id, setId] = useState("");
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
   const [author, setAuthor] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [available_yn, setAvailable_yn] = useState("");
+  const [available_yn, setAvailable_yn] = useState(" ");
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
 
+  useEffect(()=>{
+    
+    setId(bookById._id);
+    setTitle(bookById.title);
+    setCategory(bookById.category);
+    setAuthor(bookById.author);
+    setImageUrl(bookById.imageUrl);
+    setDescription(bookById.description);
+    setPrice(bookById.price);
+    setAvailable_yn(bookById.available_yn)
 
-  useEffect(() => {
-
-    const fetchbook = async () => {
-      const response = await fetch(`http://localhost:5000/books/${bookid}`, {
-        method: 'GET',
-        credentials: 'same-origin',
-
-      });
-      const data = await response.json();
-      dispatch(setBookById(data));
-      setTitle(bookById[0].title);
-      setCategory(bookById[0].category);
-      setAuthor(bookById[0].author);
-      setImageUrl(bookById[0].imageUrl)
-      setDescription(bookById[0].description)
-      setPrice(bookById[0].price)
-      setAvailable_yn(bookById[0].available_yn)
-     
-     
-    }
-    fetchbook();
+    
   }, [bookById])
 
+  const close = () => {
+    setTitle("");
+    setCategory("");
+    setAuthor("");
+    setImageUrl("");
+    setDescription("");
+    setPrice("");
+    setAvailable_yn("")
+    cancelSuccessMsg() 
+    navigate('/admin');
+    location.reload();
+  } 
+  
 
   const cancelSuccessMsg = () => {
     setMessage(null);
@@ -55,6 +59,7 @@ const UpdateBookModal = ({ bookid }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updateBook = {id, title, category, author, imageUrl, description, price, available_yn };
+  
     const response = await fetch('http://localhost:5000/books/update', {
       method: 'PUT',
       body: JSON.stringify(updateBook),
@@ -73,7 +78,7 @@ const UpdateBookModal = ({ bookid }) => {
     }
     else if (response.ok) {
       setMessage(data.message)
-      clearState();
+      
     }
 
 
@@ -107,35 +112,38 @@ const UpdateBookModal = ({ bookid }) => {
 
 
               <form onSubmit={handleSubmit}>
-
+              <div className="my-3  ">
+                  <input type="text" className="form-control" id="id" placeholder="ID" name="id" defaultValue={bookById._id} onChange={(e) =>
+                    setId(e.target.value)} on readOnly={true} />
+                </div>
                 <div className="my-3  ">
-                  <input type="text" className="form-control" id="title" placeholder="Book Title" name="title" onChange={(e) =>
-                    setTitle(e.target.value)} value={title} required />
+                  <input type="text" className="form-control" id="title" placeholder="Book Title" name="title" defaultValue={bookById.title} onChange={(e) =>
+                    setTitle(e.target.value)} readOnly={true}  required />
                 </div>
                 <div className="my-3 ">
-                  <input type="text" className="form-control" id="category" placeholder="Book Genre" name="category" onChange={(e) =>
-                    setCategory(e.target.value)} value={category} required />
+                  <input type="text" className="form-control" id="category" placeholder="Book Genre" name="category" defaultValue={bookById.category} onChange={(e) =>
+                    setCategory(e.target.value)} required />
                 </div>
                 <div className="my-3 ">
-                  <input type="text" className="form-control" id="author" placeholder="Book Author" name="author" onChange={(e) =>
-                    setAuthor(e.target.value)} value={author} required />
+                  <input type="text" className="form-control" id="author" placeholder="Book Author" name="author" defaultValue={bookById.author} onChange={(e) =>
+                    setAuthor(e.target.value)} required />
                 </div>
                 <div className="my-3">
-                  <input type="text" className="form-control" id="imageUrl" placeholder="Image URL" name="imageUrl" onChange={(e) =>
-                    setImageUrl(e.target.value)} value={imageUrl} required />
+                  <input type="text" className="form-control" id="imageUrl" placeholder="Image URL" name="imageUrl"  defaultValue={bookById.imageUrl} onChange={(e) =>
+                    setImageUrl(e.target.value)} required />
                 </div>
                 <div className="my-3 ">
-                  <input type="text" className="form-control" id="description" placeholder="Book Description" name="description" onChange={(e) =>
-                    setDescription(e.target.value)} value={description} required />
+                  <input type="text" className="form-control" id="description" placeholder="Book Description" name="description" defaultValue={bookById.description}   onChange={(e) =>
+                    setDescription(e.target.value)} required />
                 </div>
                 <div className="my-3 ">
-                  <input type="number" className="form-control" id="price" placeholder="Price in Dollars ($)" name="price" onChange={(e) =>
-                    setPrice(e.target.value)} value={price} required />
+                  <input type="number" className="form-control" id="price" placeholder="Price in Dollars ($)" name="price"  defaultValue={bookById.price} onChange={(e) =>
+                    setPrice(e.target.value)} required />
                 </div>
                 <div className="form-check form-switch">
-                  <label className="form-check-label" for="available_yn">Available</label>
-                  <input className="form-check-input form-control" type="checkbox" id="available_yn" name="available_yn" onChange={(e) =>
-                    setAvailable_yn(e.target.checked)} value={available_yn} checked/>
+                  <label className="form-check-label" htmlFor="available_yn">Available</label>
+                  <input className="form-check-input form-control" type="checkbox" id="available_yn" name="available_yn" defaultChecked={bookById.available_yn} onClick={(e) =>
+                    setAvailable_yn(e.target.checked)}/>
                 </div>
 
                 <button type="submit" className="btn btn-primary btn-lg">Update</button>
@@ -147,7 +155,7 @@ const UpdateBookModal = ({ bookid }) => {
 
 
             <div className="modal-footer">
-              <button className="btn btn-danger" data-bs-dismiss="modal" >Close</button>
+              <button className="btn btn-danger" data-bs-dismiss="modal" onClick={close} >Close</button>
             </div>
 
           </div>

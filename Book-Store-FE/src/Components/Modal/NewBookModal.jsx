@@ -30,8 +30,9 @@ const NewBookModal = () => {
     setMessage(null);
     setError(null);
     clearState();
-    navigate('/admin')
-  }
+    navigate('/admin');
+    location.reload();
+  }  
 
  
 

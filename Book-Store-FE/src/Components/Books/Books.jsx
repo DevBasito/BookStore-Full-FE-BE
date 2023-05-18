@@ -21,7 +21,7 @@ const Books = () => {
 
         }
         fetchedbooks()
-    }, [books])
+    }, [])
 
 
     return (

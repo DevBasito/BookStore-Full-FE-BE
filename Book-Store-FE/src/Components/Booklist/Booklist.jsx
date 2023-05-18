@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './Booklist.css';
 import { useDispatch, useSelector } from "react-redux";
-import { setData, fetchBooks } from "../../../Redux/Books";
+import { setData, setBookById,fetchBooks } from "../../../Redux/Books";
 import NewBookModal from "../Modal/NewBookModal";
 import UpdateBookModal from "../Modal/UpdateBookModal";
 
@@ -30,14 +30,15 @@ const Booklist = () => {
 
             });
             const data = await response.json();
-            dispatch(setData(data));
+            dispatch(setData(data));    
+           
 
 
 
         }
         fetchedbooks()
-    }, [books])
-    console.log(books)
+    }, [])
+   
 
     return (
         <>
@@ -56,7 +57,7 @@ const Booklist = () => {
                     <table className="table table-bordered table-striped table-hover table-responsive ">
                         <thead className="table-dark text-white">
                             <tr className="" >
-                                <th> </th>
+                                <th> &nbsp; </th>
                                 <th>Title</th>
                                 <th>Description</th>
                                 <th>Category</th>
@@ -73,9 +74,11 @@ const Booklist = () => {
                             {books && books.map((book) => (
 
                                 <tr className="" key={book._id}>
+                                    
                                     <td>
-                                        <i className="fa fa-edit btn" data-bs-toggle="modal" data-bs-target="#updateBookModal" onClick={() => { setBookId(book._id) }}></i>
+                                        <i className="fa fa-edit btn" data-bs-toggle="modal" data-bs-target="#updateBookModal" onClick={() => { dispatch(setBookById(book)) }}></i>
                                     </td>
+                                    
                                     <td>{book.title}</td>
                                     <td>{book.description}</td>
                                     <td>{book.category}</td>
@@ -83,7 +86,6 @@ const Booklist = () => {
                                     <td>{book.imageUrl}</td>
                                     <td>{book.price}</td>
                                     <td>{book.purchaseCount}</td>
-                                    {/* <td>{book.available_yn}</td> */}
                                     {book.available_yn ?
                                         <td>Yes</td> :
                                         <td>No</td>
@@ -99,7 +101,7 @@ const Booklist = () => {
 
 
             <NewBookModal />
-            <UpdateBookModal bookid={bookId} />
+           
 
         </>
     )

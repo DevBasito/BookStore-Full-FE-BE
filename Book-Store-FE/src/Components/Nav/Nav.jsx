@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import './Nav.css';
 import images from "../../assets/images";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import Images from '../../Constants/Images.js';
 
@@ -10,6 +11,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Nav = () => {
   const { user } = useSelector(state => state.user);
+
+  const navigate = useNavigate();
+
+  const logout = () =>{
+    sessionStorage.clear();
+    navigate("/admin");
+    location.reload()
+  }
 
 
 
@@ -59,12 +68,18 @@ const Nav = () => {
               <ul className="navbar-nav">
                 {!user ?
                     (<li className="nav-item ">
-                      <Link className="nav-link text-white " to="/login">Login</Link>
+                      <Link className="nav-link text-white " to="/login">Admin</Link>
                     </li>)
                     :
-                    (<li className="nav-item ">
-                      <Link className="nav-link text-white " to="/login"><i className="fa fa-user"></i> {user.user.email} <span>Logout</span> </Link>
-                    </li>)
+                    (<>
+                      <li className="nav-item ">
+                        <Link className="nav-link text-white " to="/admin"><i className="fa fa-user"></i> {user.user.email} </Link>
+                      </li>
+                      <li>
+                        <button className="btn btn-outline-danger btn-lg" onClick={logout}>LogOut</button>
+                      </li>
+                     </>
+                    )
                 }
               </ul>
             </div>
