@@ -1,54 +1,91 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import images from "../../assets/images";
+import { useSelector, useDispatch } from "react-redux";
+import { setCartNo } from "../../../Redux/cart";
+import { useNavigate } from "react-router-dom";
 
 
 const Product = (product) => {
+    const { cartNo } = useSelector(state => state.cart);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [productCount, setProductCount] = useState(0);
+    const [productPrice, setProductPrice] = useState("");
+    const [productTitle, setProductTitle] = useState("");
+
+    const cartPlus = () => {
+        setProductCount(productCount + 1)
+
+    }
+
+    const cartMinus = () => {
+        if (productCount == 0) {
+            setProductCount(0)
+        } else {
+            setProductCount(productCount - 1)
+        }
+
+    }
+
+    const addToCart = () => {
+        dispatch(setCartNo(productCount))
+        setProductCount(0);
+        
+
+    }
+
+    useEffect(() => {
+        setProductPrice(product.product.price);
+        setProductTitle(product.product.title);
+    }, [product])
+
+
     return (
         <>
             <div className="modal fade" id="product" >
                 <div className="modal-dialog modal-dialog-centered modal-lg">
                     <div className="modal-content">
+                        <div className="modal-header">
+
+                            <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
 
 
 
                         <div className="modal-body">
                             <div className="container row">
-                                <div className="col"> <img src={product.product.imageUrl} alt="" className="w-100 "/></div>
+                                <div className="col-lg-6"> <img src={product.product.imageUrl} alt="" className="w-100 img-fluid h-100" /></div>
 
 
-                                <div className="col">
-                                    <h6 className=" text-Orange font-bold  ">{product.product.author}</h6>
+                                <div className="col-lg-6">
+                                    <h6 className=" text-primary font-bold">{product.product.author}</h6>
 
+                                    <h1 className="font-bold my-2">{product.product.title} </h1>
+                                    <p className="opacity-75 ">{product.product.category}</p>
 
-                                    <h1 className="font-bold text-3xl md:text-5xl my-4">{product.product.title} </h1>
-
-                                    <p className="w-11/12 md:w-8/12 my-3 opacity-75"> {product.product.description}</p>
-                                    <p className="font-bold text-3xl mt-4 my-5 items-center">
-                                    ${product.product.price}
-                                        <span className="px-1 mr-5 text-sm bg-PaleOrange  font-thin text-Orange rounded ">50%</span>
-                                        <br className=" hidden md:block" />
-
-                                        <del className="opacity-75 text-sm float-right md:float-left items-center">$ {product.product.category}</del>
-                                    </p>
+                                    <p className="my-3 opacity-75"> {product.product.description}</p>
+                                    <p className="font-bold items-centern py-2">${product.product.price}</p>
 
 
 
-                                    <div className="my-4 hidden md:block">
 
-                                        <span className="bg-Lightgrey rounded-lg  py-3 mr-3  ">
-                                            <button className=" px-4 " ><img src={images.Minus} alt="" /></button>
+                                    <div className="my-3">
 
-                                            <span className="px-3 md:px-3 ">2</span>
+                                        <span className="rounded-pill py-3" style={{ backgroundColor: "#F7F8FE" }}>
+                                            <span className=" px-4 btn" onClick={cartMinus} ><img src={images.Minus} alt="" /></span>
 
-                                            <button className=" px-4 " ><img src={images.Plus} alt="" /></button>
+                                            <span className="px-3 ">{productCount}</span>
+
+                                            <span className=" px-4 btn" onClick={cartPlus} ><img src={images.Plus} alt="" /></span>
 
                                         </span>
 
+                                    </div>
+                                    <div>
 
 
-                                        <button className="bg-Orange rounded-lg  py-3 px-5 text-white  " 
-                                        // onClick={addToCart}
-                                        >
+                                        <button className="btn btn-primary py-3 px-4 text-white" data-bs-dismiss="modal" onClick={addToCart}>
                                             <img src={images.CartW} alt="" className="inline-block mx-1" />
                                             <span className="">Add to Cart</span>
                                         </button>

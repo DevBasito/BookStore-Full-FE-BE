@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Nav = () => {
   const { user } = useSelector(state => state.user);
+  const { cartNo } = useSelector(state => state.cart);
 
   const navigate = useNavigate();
 
@@ -36,15 +37,15 @@ const Nav = () => {
           </div>
 
           <div className="col-4">
-            
+
             <img src={images.Huddle} alt="Logo" className="img-fluid" />
           </div>
 
           <div className="col-3">
-            <span className="badge rounded-pill bg-dark absolute top-2.5 hidden " id="badge">2</span>
             <img src={images.Cart} alt=""
-              // onClick={openCart}
+            // onClick={openCart}
             />
+            <span className="position-absolute top-5 translate-middle badge rounded-pill bg-light text-dark " id="badge">{cartNo}</span>
           </div>
         </div>
 
@@ -74,6 +75,12 @@ const Nav = () => {
           {
             <div className="container-fluid text-white col-12 col-sm-4 text-white justify-content-end px-5">
               <ul className="navbar-nav">
+                <li className="nav-item">
+                  <img src={images.Cart} alt=""
+                  // onClick={openCart}
+                  />
+                  <span className="position-absolute top-5 translate-middle badge rounded-pill bg-light text-dark " id="badge">{cartNo}</span>
+                </li>
                 {!user ?
                   (<li className="nav-item ">
                     <Link className="nav-link text-white " to="/login">Admin</Link>
