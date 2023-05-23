@@ -14,7 +14,7 @@ const Nav = () => {
 
   const navigate = useNavigate();
 
-  const logout = () =>{
+  const logout = () => {
     sessionStorage.clear();
     navigate("/admin");
     location.reload()
@@ -28,15 +28,23 @@ const Nav = () => {
 
         <div className="navbar navbar-dark bg-dark d-sm-none row ">
 
-          <div className="col-6">
-            <img src={images.Huddle} alt="Logo" className="img-fluid" />
-          </div>
-
-          <div className="col-3">
+          <div className="col-2">
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent"
               aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
+          </div>
+
+          <div className="col-4">
+            
+            <img src={images.Huddle} alt="Logo" className="img-fluid" />
+          </div>
+
+          <div className="col-3">
+            <span className="badge rounded-pill bg-dark absolute top-2.5 hidden " id="badge">2</span>
+            <img src={images.Cart} alt=""
+              // onClick={openCart}
+            />
           </div>
         </div>
 
@@ -62,30 +70,30 @@ const Nav = () => {
 
             </ul>
           </div>
-          
+
           {
             <div className="container-fluid text-white col-12 col-sm-4 text-white justify-content-end px-5">
               <ul className="navbar-nav">
                 {!user ?
-                    (<li className="nav-item ">
-                      <Link className="nav-link text-white " to="/login">Admin</Link>
-                    </li>)
-                    :
-                    (<>
-                      <li className="nav-item ">
-                        <Link className="nav-link text-white " to="/admin"><i className="fa fa-user"></i> {user.user.email} </Link>
-                      </li>
-                      <li>
-                        <button className="btn btn-outline-danger btn-lg" onClick={logout}>LogOut</button>
-                      </li>
-                     </>
-                    )
+                  (<li className="nav-item ">
+                    <Link className="nav-link text-white " to="/login">Admin</Link>
+                  </li>)
+                  :
+                  (<>
+                    <li className="nav-item ">
+                      <Link className="nav-link text-white " to="/admin"><i className="fa fa-user"></i> {user.user.email} </Link>
+                    </li>
+                    <li>
+                      <button className="btn btn-outline-danger btn-lg" onClick={logout}>LogOut</button>
+                    </li>
+                  </>
+                  )
                 }
               </ul>
             </div>
 
           }
-           
+
         </nav>
 
 

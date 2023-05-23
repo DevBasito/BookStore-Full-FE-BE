@@ -1,14 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import './Books.css';
 import Header from "../Header/Header";
+import Product from "../Product/Product";
 import Subscribe from "../Subscribe/Subscribe";
 import { useDispatch, useSelector } from "react-redux";
 import { setData} from "../../../Redux/Books";
 
 
 const Books = () => {
+
     const { books } = useSelector(state => state.books);
     const dispatch = useDispatch();
+
+    const [product, setProduct] = useState("");
 
     useEffect(() => {
 
@@ -22,7 +26,6 @@ const Books = () => {
         }
         fetchedbooks()
     }, [])
-
 
     return (
         <>
@@ -40,9 +43,9 @@ const Books = () => {
                             <div className="card-body">
                                 <h4 className="card-title">{book.title}</h4>
                                 <h6 className="card-text">{book.category}</h6>
-                                <p className="text-left" style={{ height:"13rem" }}>{book.description}</p>
+                                <p className=" " style={{ height:"13rem", textAlign: "justify" }}>{book.description}</p>
                                 <div className="text-center">
-                                    <a href="#" className="btn btn-primary btn-lg px-5">$ <span>{book.price}</span></a>
+                                    <button  className="btn btn-primary btn-lg px-5" data-bs-toggle="modal" data-bs-target="#product" onClick={()=>{setProduct(book)}}>$ <span>{book.price}</span></button>
                                 </div>
                             </div>
 
@@ -55,6 +58,8 @@ const Books = () => {
 
             </div>
             <Subscribe />
+
+            <Product product={product}/>
         </>
     )
 
