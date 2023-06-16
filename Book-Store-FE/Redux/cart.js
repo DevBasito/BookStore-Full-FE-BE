@@ -5,12 +5,36 @@ export const CartSlice = createSlice({
   name: 'cart',
   initialState: {
     cartNo: 0,
+    cartItems: [],
+    cartTotal: 0
+
   },
   reducers: {
     setCartNo: (state, action) => {
       state.cartNo += action.payload;
 
     },
+    subCartNo: (state, action) => {
+      state.cartNo -= action.payload;
+    },
+    setCartTotal: (state, action) => {
+      state.cartTotal = action.payload;
+
+    },
+    setCartItems: (state, action) => {
+      state.cartItems.push(action.payload);
+      // state.cartItems.forEach(amount => {
+      //   state.cartItems += amount.subtotal;
+      // });
+
+    },
+    removeItem:(state, action) => {
+      state.cartItems = state.cartItems.filter(data => data.id != action.payload);
+      // state.cartItems.forEach(amount => {
+      //   state.cartItems += amount.subtotal;
+      // });
+    },
+
 
     cartPlus: (state) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
@@ -35,6 +59,6 @@ export const CartSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setCartNo, cartPlus, cartMinus } = CartSlice.actions
+export const { setCartNo, subCartNo, setCartTotal, setCartItems,removeItem,  cartPlus, cartMinus } = CartSlice.actions
 
 export default CartSlice.reducer

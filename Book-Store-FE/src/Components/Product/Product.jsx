@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from "react";
 import images from "../../assets/images";
 import { useSelector, useDispatch } from "react-redux";
-import { setCartNo } from "../../../Redux/cart";
+import { setCartNo, setCartItems } from "../../../Redux/cart";
 import { useNavigate } from "react-router-dom";
 
 
 const Product = (product) => {
     const { cartNo } = useSelector(state => state.cart);
+    const { cartItems } = useSelector(state => state.cart);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
 
     const [productCount, setProductCount] = useState(0);
-    const [productPrice, setProductPrice] = useState("");
-    const [productTitle, setProductTitle] = useState("");
+    const [cartProducts, setCartProducts] = useState({id: "",
+                                                      title: "",
+                                                      price:"",
+                                                      quantity:"",
+                                                      subtotal:""
+                                                    })
 
     const cartPlus = () => {
         setProductCount(productCount + 1)
@@ -27,18 +33,29 @@ const Product = (product) => {
         }
 
     }
+    console.log(product)
 
     const addToCart = () => {
         dispatch(setCartNo(productCount))
+        dispatch(setCartItems(cartProducts))
+        console.log(cartProducts)
         setProductCount(0);
+       
+        
         
 
     }
 
     useEffect(() => {
-        setProductPrice(product.product.price);
-        setProductTitle(product.product.title);
-    }, [product])
+        setCartProducts({
+            id: product.product._id,
+            title: product.product.title,
+            price: product.product.price,
+            quantity: productCount,
+            subtotal: Number(product.product.price) * Number(productCount)
+
+        })
+    }, [productCount])
 
 
     return (
@@ -106,3 +123,21 @@ const Product = (product) => {
 }
 
 export default Product
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
