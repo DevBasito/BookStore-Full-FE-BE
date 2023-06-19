@@ -40,7 +40,7 @@ const Cart = () => {
   }
 
   useEffect(() => {
-    let totalAmount
+    let totalAmount = 0
     cartItems.forEach(cartItem => {
       totalAmount += cartItem.subtotal;
     })
@@ -61,49 +61,59 @@ const Cart = () => {
             </div>
 
             <div className="modal-body ">
+              {cartItems.length !== 0 ?
+                ( <>
+                  <div className="container-fluid mx-auto table-responsive" id="tablediv">
+                    <table className="table table-hover table-responsive ">
+                      <thead className="table-dark text-white">
+                        <tr>
+                          <th>Title</th>
+                          <th>Price</th>
+                          <th>Quantity</th>
+                          <th>SubTotal </th>
+                          <th></th>
 
-              <div className="container-fluid mx-auto table-responsive" id="tablediv">
-                <table className="table table-hover table-responsive ">
-                  <thead className="table-dark text-white">
-                    <tr>
-                      {/* <th>ID</th> */}
-                      <th>Title</th>
-                      <th>Price ($)</th>
-                      <th>Quantity</th>
-                      <th>SubTotal ($)</th>
-                      <th>&nbsp.</th>
+                        </tr>
+                      </thead>
+                      <tbody>
 
-                    </tr>
-                  </thead>
-                  <tbody>
+                        {cartItems && cartItems.map((cartItem) => (
 
-                    {cartItems && cartItems.map((cartItem) => (
+                          <tr className="" key={cartItem.id}>
+                            <td>{cartItem.title}</td>
+                            <td>${cartItem.price}</td>
+                            <td>{cartItem.quantity}</td>
+                            <td>${cartItem.subtotal}</td>
+                            <td>
+                              <i className="fa fa-close text-danger"
+                                onClick={() => {
+                                  dispatch(removeItem(cartItem.id))
+                                  dispatch(subCartNo(cartItem.quantity))
+                                }}>
+                              </i>
+                            </td>
+                          </tr>
 
-                      <tr className="" key={cartItem.id}>
-                        <td>{cartItem.title}</td>
-                        <td>{cartItem.price}</td>
-                        <td>{cartItem.quantity}</td>
-                        <td>{cartItem.subtotal}</td>
-                        <td>
-                          <i className="fa fa-close"
-                            onClick={() => {
-                              dispatch(removeItem(cartItem.id))
-                              dispatch(subCartNo(cartItem.quantity))
-                            }}>
-                          </i>
-                        </td>
-                      </tr>
+                        ))}
+                      </tbody>
+                    </table>
 
-                    ))}
-                  </tbody>
-                </table>
-
-              </div>
-
-
-              <h1>Total : {cartTotal}</h1>
+                  </div>
 
 
+                  <h1>Total : ${cartTotal}</h1>
+                </>
+                )
+
+                :
+
+                (
+                <div className="text-center">
+                  Cart is Empty <i className="fa fa-shopping-cart"></i>
+                </div>
+                )
+
+              }
 
             </div>
 

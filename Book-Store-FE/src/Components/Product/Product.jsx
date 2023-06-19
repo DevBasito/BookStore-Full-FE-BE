@@ -10,15 +10,16 @@ const Product = (product) => {
     const { cartItems } = useSelector(state => state.cart);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
 
     const [productCount, setProductCount] = useState(0);
-    const [cartProducts, setCartProducts] = useState({id: "",
-                                                      title: "",
-                                                      price:"",
-                                                      quantity:"",
-                                                      subtotal:""
-                                                    })
+    const [cartProducts, setCartProducts] = useState({
+        id: "",
+        title: "",
+        price: "",
+        quantity: "",
+        subtotal: ""
+    })
 
     const cartPlus = () => {
         setProductCount(productCount + 1)
@@ -40,9 +41,9 @@ const Product = (product) => {
         dispatch(setCartItems(cartProducts))
         console.log(cartProducts)
         setProductCount(0);
-       
-        
-        
+
+
+
 
     }
 
@@ -102,7 +103,8 @@ const Product = (product) => {
                                     <div>
 
 
-                                        <button className="btn btn-primary py-3 px-4 text-white" data-bs-dismiss="modal" onClick={addToCart}>
+                                        <button className="btn btn-primary py-3 px-4 text-white" data-bs-dismiss="modal"
+                                         onClick={addToCart} disabled={productCount == 0 ? true : false}>
                                             <img src={images.CartW} alt="" className="inline-block mx-1" />
                                             <span className="">Add to Cart</span>
                                         </button>
