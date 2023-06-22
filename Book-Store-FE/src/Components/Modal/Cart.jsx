@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeItem, subCartNo, setCartTotal } from "../../../Redux/cart";
+import { removeItem, subCartNo, setCartTotal, setCartProducts, setCartQtys } from "../../../Redux/cart";
 import { useNavigate } from "react-router-dom";
 
 
 const Cart = () => {
 
-  const { cartItems } = useSelector(state => state.cart);
-  const { cartTotal } = useSelector(state => state.cart);
+  const { cartItems, cartTotal} = useSelector(state => state.cart);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -41,11 +40,19 @@ const Cart = () => {
 
   useEffect(() => {
     let totalAmount = 0
+    let products = ""
+    let quantity = ""
     cartItems.forEach(cartItem => {
       totalAmount += cartItem.subtotal;
+      products += `${cartItem.title},`
+      quantity += `${cartItem.quantity},`
+      console.log(products)
+      console.log(quantity)
     })
 
     dispatch(setCartTotal(totalAmount))
+    dispatch(setCartProducts(products))
+    dispatch(setCartQtys(quantity))
 
   }, [cartItems])
 
@@ -62,7 +69,7 @@ const Cart = () => {
 
             <div className="modal-body ">
               {cartItems.length !== 0 ?
-                ( <>
+                (<>
                   <div className="container-fluid mx-auto table-responsive" id="tablediv">
                     <table className="table table-hover table-responsive ">
                       <thead className="table-dark text-white">
@@ -97,20 +104,20 @@ const Cart = () => {
                         ))}
                       </tbody>
                     </table>
+                    <div className="text-end h5">
+                      Total : ${cartTotal}
+                    </div>
 
                   </div>
-
-
-                  <h1>Total : ${cartTotal}</h1>
                 </>
                 )
 
                 :
 
                 (
-                <div className="text-center">
-                  Cart is Empty <i className="fa fa-shopping-cart"></i>
-                </div>
+                  <div className="text-center">
+                    Cart is Empty <i className="fa fa-shopping-cart"></i>
+                  </div>
                 )
 
               }
@@ -119,7 +126,12 @@ const Cart = () => {
 
 
             <div className="modal-footer">
-              <button className="btn btn-danger" data-bs-dismiss="modal" onClick={close}>Close</button>
+              {cartItems.length !== 0 ?
+                (<button className="btn btn-success" data-bs-dismiss="modal"
+                  onClick={() => { navigate("/checkout") }}>Checkout <i className="	fas fa-shopping-cart"></i>
+                </button>
+                ) : (<></>)
+              }
             </div>
 
           </div>

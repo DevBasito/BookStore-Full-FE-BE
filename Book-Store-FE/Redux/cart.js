@@ -1,12 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+// cartNo is supposed to calculate the number of items in the cart altogether
+// cartItems is the array of objects of the items in the cart as the products are in the databse i.e id, title, author, price
+// cartTotal calculates the total amount of all items in the cart
+// cartProducts holds the titles of the products in the cart as a string for the pirpose of dropping it in the order table
+// cartQtys holds the quantity of each titles in cartProducts respectively to be dropped in the order table
 
 export const CartSlice = createSlice({
   name: 'cart',
   initialState: {
     cartNo: 0,
     cartItems: [],
-    cartTotal: 0
+    cartTotal: 0,
+    cartProducts:"",
+    cartQtys:""
 
   },
   reducers: {
@@ -23,16 +30,20 @@ export const CartSlice = createSlice({
     },
     setCartItems: (state, action) => {
       state.cartItems.push(action.payload);
-      // state.cartItems.forEach(amount => {
-      //   state.cartItems += amount.subtotal;
-      // });
+     
+
+    },
+    setCartProducts: (state, action) => {
+      state.cartProducts = action.payload;
+
+    },
+    setCartQtys: (state, action) => {
+      state.cartQtys = action.payload;
 
     },
     removeItem:(state, action) => {
       state.cartItems = state.cartItems.filter(data => data.id != action.payload);
-      // state.cartItems.forEach(amount => {
-      //   state.cartItems += amount.subtotal;
-      // });
+      
     },
 
 
@@ -59,6 +70,6 @@ export const CartSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setCartNo, subCartNo, setCartTotal, setCartItems,removeItem,  cartPlus, cartMinus } = CartSlice.actions
+export const { setCartNo, subCartNo, setCartTotal, setCartItems, setCartProducts, setCartQtys, removeItem,  cartPlus, cartMinus } = CartSlice.actions
 
 export default CartSlice.reducer

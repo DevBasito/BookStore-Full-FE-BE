@@ -9,6 +9,7 @@ import Subscribe from './Components/Subscribe/Subscribe';
 import Footer from './Components/Footer/Footer';
 import './App.css'
 import AdminPage from './Components/AdminPage/AdminPage';
+import Checkout from './Components/Modal/Checkout';
 import { useDispatch, useSelector } from "react-redux";
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
           <Route path='/books' element={<Books />} />
           <Route path='/login' element={<Login />} />
           <Route path='/admin' element={ user ? <AdminPage/> : <Login /> } />
+          <Route path='/checkout' element={<Checkout/>} />
         </Routes>
         {/* {!user ? <Subscribe /> : null } */}
         <Footer />
